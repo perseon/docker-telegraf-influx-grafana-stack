@@ -34,6 +34,23 @@ services:
       - ./grafana/provisioning/:/etc/grafana/provisioning/
       - ./grafana/dashboards/:/var/lib/grafana/dashboards/
 
+  rabbit:
+      restart: always
+      build:
+          dockerfile: Dockerfile
+          context: ./rabbit
+      volumes:
+          - rabbit_etc:/etc/rabbitmq/
+          - rabbit_data:/var/lib/rabbitmq/
+          - rabbit_logs:/var/log/rabbitmq/
+      ports:
+          - "5672:5672"
+          - "15672:15672"
+          - "1883:1883"
+
 volumes:
   grafana_data: {}
   influxdb_data: {}
+  rabbit_etc:
+  rabbit_data:
+  rabbit_logs:
